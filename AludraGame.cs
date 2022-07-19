@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace Aludra.Core
+namespace Aludra
 {
     public class AludraGame : Game
     {

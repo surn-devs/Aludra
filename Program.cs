@@ -1,7 +1,6 @@
 ﻿using System;
-using Aludra.Core;
 
-namespace Aludra.DesktopGL
+namespace Aludra
 {
     public static class Program
     {
