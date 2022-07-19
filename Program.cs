@@ -1,14 +1,14 @@
 ﻿using System;
+using Aludra.Game;
 
-namespace Aludra
+namespace Aludra;
+
+public static class Program
 {
-    public static class Program
+    [STAThread]
+    private static void Main()
     {
-        [STAThread]
-        static void Main()
-        {
-            using var game = new AludraGame();
-            game.Run();
-        }
+        using var game = new GameEngine();
+        game.Run();
     }
 }
