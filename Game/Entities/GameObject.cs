@@ -1,15 +1,14 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using Aludra.Game.Contexts;
 
 namespace Aludra.Game.Entities;
 
 public abstract class GameObject
 {
-    public virtual void Update(GameTime gameTime)
+    public virtual void Update(UpdateContext context)
     {
     }
 
-    public virtual void Draw(SpriteBatch spriteBatch)
+    public virtual void Draw(DrawContext context)
     {
     }
 }

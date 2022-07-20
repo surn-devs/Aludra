@@ -1,5 +1,5 @@
+using Aludra.Game.Contexts;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace Aludra.Game.Entities;
 
@@ -9,15 +9,15 @@ public class Player : GameObject
     private Vector2 _pos = new(400, 500);
     private Vector2 _vel = Vector2.Zero;
 
-    public override void Update(GameTime gameTime)
+    public override void Update(UpdateContext context)
     {
-        _vel = InputHandler.DirectionVector * Speed;
-        _pos += _vel * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        _vel = context.InputHandler.DirectionVector * Speed;
+        _pos += _vel * (float)context.GameTime.ElapsedGameTime.TotalSeconds;
     }
 
-    public override void Draw(SpriteBatch spriteBatch)
+    public override void Draw(DrawContext context)
     {
-        var pos = _pos - TextureManager.Player!.Bounds.Center.ToVector2();
-        spriteBatch.Draw(TextureManager.Player, pos, Color.White);
+        var pos = _pos - context.TextureCache.Player!.Bounds.Center.ToVector2();
+        context.SpriteBatch.Draw(context.TextureCache.Player, pos, Color.White);
     }
 }

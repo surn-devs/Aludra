@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Aludra.Game.Contexts;
 using Aludra.Game.Scenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,8 +9,10 @@ namespace Aludra.Game;
 public class GameEngine : Microsoft.Xna.Framework.Game
 {
     private readonly GraphicsDeviceManager _graphics;
+    private readonly InputHandler _inputHandler = new();
     private readonly SceneManager _sceneManager;
     private readonly ScreenScaler _screenScaler = new(800, 600);
+    private readonly TextureCache _textureCache = new();
     private SpriteBatch? _spriteBatch;
 
     public GameEngine()
@@ -23,14 +26,14 @@ public class GameEngine : Microsoft.Xna.Framework.Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(_graphics.GraphicsDevice);
-        TextureManager.LoadContent(Content);
+        _textureCache.LoadContent(Content);
     }
 
     protected override void Update(GameTime gameTime)
     {
-        InputHandler.Update();
+        _inputHandler.Update();
         _screenScaler.Update(_graphics);
-        _sceneManager.Update(gameTime);
+        _sceneManager.Update(new UpdateContext(gameTime, _inputHandler));
         base.Update(gameTime);
     }
 
@@ -41,7 +44,7 @@ public class GameEngine : Microsoft.Xna.Framework.Game
         _graphics.GraphicsDevice.Clear(Color.Black);
 
         _spriteBatch.Begin(SpriteSortMode.Immediate, transformMatrix: _screenScaler.Transformation);
-        _sceneManager.Draw(_spriteBatch);
+        _sceneManager.Draw(new DrawContext(_spriteBatch, _textureCache));
         _spriteBatch.End();
 
         base.Draw(gameTime);

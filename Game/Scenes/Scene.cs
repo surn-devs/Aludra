@@ -1,10 +1,9 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using Aludra.Game.Contexts;
 
 namespace Aludra.Game.Scenes;
 
 public abstract class Scene
 {
-    public abstract void Update(GameTime gameTime);
-    public abstract void Draw(SpriteBatch spriteBatch);
+    public abstract void Update(UpdateContext context);
+    public abstract void Draw(DrawContext context);
 }

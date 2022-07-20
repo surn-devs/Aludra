@@ -5,10 +5,8 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Aludra.Game;
 
-public static class InputHandler
+public class InputHandler
 {
-    private static KeyboardState _keyboardState;
-
     private static readonly ImmutableDictionary<Keys, Vector2> Directions = new Dictionary<Keys, Vector2>
     {
         { Keys.W, new Vector2(0, -1) },
@@ -17,7 +15,9 @@ public static class InputHandler
         { Keys.D, new Vector2(1, 0) }
     }.ToImmutableDictionary();
 
-    public static Vector2 DirectionVector
+    private KeyboardState _keyboardState;
+
+    public Vector2 DirectionVector
     {
         get
         {
@@ -34,7 +34,7 @@ public static class InputHandler
         }
     }
 
-    public static void Update()
+    public void Update()
     {
         _keyboardState = Keyboard.GetState();
     }

@@ -1,5 +1,4 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using Aludra.Game.Contexts;
 
 namespace Aludra.Game.Scenes;
 
@@ -12,13 +11,13 @@ public class SceneManager
         _currentScene = initialScene;
     }
 
-    public void Update(GameTime gameTime)
+    public void Update(UpdateContext context)
     {
-        _currentScene.Update(gameTime);
+        _currentScene.Update(context);
     }
 
-    public void Draw(SpriteBatch spriteBatch)
+    public void Draw(DrawContext context)
     {
-        _currentScene.Draw(spriteBatch);
+        _currentScene.Draw(context);
     }
 }

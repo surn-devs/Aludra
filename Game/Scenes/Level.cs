@@ -1,6 +1,6 @@
+using Aludra.Game.Contexts;
 using Aludra.Game.Entities;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace Aludra.Game.Scenes;
 
@@ -8,14 +8,15 @@ public class Level : Scene
 {
     private readonly Player _player = new();
 
-    public override void Update(GameTime gameTime)
+    public override void Update(UpdateContext context)
     {
-        _player.Update(gameTime);
+        _player.Update(context);
     }
 
-    public override void Draw(SpriteBatch spriteBatch)
+    public override void Draw(DrawContext context)
     {
-        spriteBatch.Draw(TextureManager.Background, Vector2.Zero, Color.White);
-        _player.Draw(spriteBatch);
+        context.SpriteBatch.Draw(context.TextureCache.Background, Vector2.Zero, Color.White);
+
+        _player.Draw(context);
     }
 }
