@@ -17,7 +17,8 @@ public class Player : GameObject
 
     public override void Draw(DrawContext context)
     {
-        var pos = _pos - context.TextureCache.Player!.Bounds.Center.ToVector2();
-        context.SpriteBatch.Draw(context.TextureCache.Player, pos, Color.White);
+        var texture = context.TextureManager.Get("Player");
+        var pos = _pos - texture.Bounds.Center.ToVector2();
+        context.SpriteBatch.Draw(texture, pos, Color.White);
     }
 }

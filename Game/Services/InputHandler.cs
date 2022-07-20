@@ -3,7 +3,7 @@ using System.Collections.Immutable;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace Aludra.Game;
+namespace Aludra.Game.Services;
 
 public class InputHandler
 {

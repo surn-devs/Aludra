@@ -15,7 +15,7 @@ public class Level : Scene
 
     public override void Draw(DrawContext context)
     {
-        context.SpriteBatch.Draw(context.TextureCache.Background, Vector2.Zero, Color.White);
+        context.SpriteBatch.Draw(context.TextureManager.Get("Background"), Vector2.Zero, Color.White);
 
         _player.Draw(context);
     }

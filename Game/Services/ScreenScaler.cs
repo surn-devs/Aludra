@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 
-namespace Aludra.Game;
+namespace Aludra.Game.Services;
 
 public class ScreenScaler
 {
