@@ -9,10 +9,10 @@ public class InputHandler
 {
     private static readonly ImmutableDictionary<Keys, Vector2> Directions = new Dictionary<Keys, Vector2>
     {
-        { Keys.W, new Vector2(0, -1) },
-        { Keys.S, new Vector2(0, 1) },
-        { Keys.A, new Vector2(-1, 0) },
-        { Keys.D, new Vector2(1, 0) }
+        { Keys.W, -Vector2.UnitY },
+        { Keys.S, Vector2.UnitY },
+        { Keys.A, -Vector2.UnitX },
+        { Keys.D, Vector2.UnitX }
     }.ToImmutableDictionary();
 
     private KeyboardState _keyboardState;
@@ -33,6 +33,10 @@ public class InputHandler
             return direction;
         }
     }
+
+    public bool PrimaryActionPressed => _keyboardState.IsKeyDown(Keys.Space);
+
+    public bool SecondActionPressed => _keyboardState.IsKeyDown(Keys.LeftShift);
 
     public void Update()
     {
