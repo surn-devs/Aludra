@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Aludra.Game.Contexts;
 using Aludra.Game.Entities;
+using Aludra.Game.Entities.Base;
 using Microsoft.Xna.Framework;
 
 namespace Aludra.Game.Scenes;

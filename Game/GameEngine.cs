@@ -9,10 +9,12 @@ namespace Aludra.Game;
 
 public class GameEngine : Microsoft.Xna.Framework.Game
 {
+    public static readonly Rectangle ScreenBounds = new(0, 0, 800, 600);
+
     private readonly GraphicsDeviceManager _graphics;
     private readonly InputHandler _inputHandler = new();
     private readonly SceneManager _sceneManager = new(new Level());
-    private readonly ScreenScaler _screenScaler = new(800, 600);
+    private readonly ScreenScaler _screenScaler = new(ScreenBounds.Width, ScreenBounds.Height);
     private readonly TextureManager _textureManager;
     private SpriteBatch? _spriteBatch;
 

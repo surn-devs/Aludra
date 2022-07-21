@@ -1,6 +1,6 @@
 using Aludra.Game.Contexts;
 
-namespace Aludra.Game.Entities;
+namespace Aludra.Game.Entities.Base;
 
 public abstract class GameObject
 {

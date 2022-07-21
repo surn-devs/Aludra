@@ -8,7 +8,7 @@ public class ScreenScaler
     private int _previousBufferHeight;
     private int _previousBufferWidth;
 
-    public ScreenScaler(uint width, uint height)
+    public ScreenScaler(int width, int height)
     {
         _baseScreenSize = new Vector2(width, height);
     }

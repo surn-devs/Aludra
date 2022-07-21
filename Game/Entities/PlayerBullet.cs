@@ -1,29 +1,23 @@
 using Aludra.Game.Contexts;
+using Aludra.Game.Entities.Base;
 using Microsoft.Xna.Framework;
 
 namespace Aludra.Game.Entities;
 
-public class PlayerBullet : GameObject
+public class PlayerBullet : RigidBodyObject
 {
-    private const float SpeedUps = 512;
-    private Vector2 _pos;
+    private const float Speed = 512;
 
     public PlayerBullet(Vector2 pos)
     {
-        _pos = pos;
-    }
-
-    public override void Update(LevelUpdateContext context)
-    {
-        _pos -= Vector2.UnitY * SpeedUps * (float)context.GameTime.ElapsedGameTime.TotalSeconds;
-
-        if (_pos.Y < 0) context.Destroy(this);
+        Position = pos;
+        Velocity = -Vector2.UnitY * Speed;
     }
 
     public override void Draw(DrawContext context)
     {
         var texture = context.TextureManager.Get("PlayerBullet");
-        var pos = _pos - texture.Bounds.Center.ToVector2();
+        var pos = Position - texture.Bounds.Center.ToVector2();
         context.SpriteBatch.Draw(texture, pos, Color.White);
     }
 }
