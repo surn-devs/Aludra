@@ -35,8 +35,6 @@ public class Player : RigidBodyObject
 
     public override void Draw(DrawContext context)
     {
-        var texture = context.TextureManager.Get("Player");
-        var pos = Position - texture.Bounds.Center.ToVector2();
-        context.SpriteBatch.Draw(texture, pos, Color.White);
+        context.DrawCentered("Player", Position);
     }
 }

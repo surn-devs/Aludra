@@ -1,14 +1,23 @@
 ﻿using System;
 using Aludra.Game;
 
-namespace Aludra;
-
-public static class Program
+namespace Aludra
 {
-    [STAThread]
-    private static void Main()
+    public static class Program
     {
-        using var game = new GameEngine();
-        game.Run();
+        [STAThread]
+        private static void Main()
+        {
+            using var game = new GameEngine();
+            game.Run();
+        }
+    }
+}
+
+namespace System.Runtime.CompilerServices
+{
+    // ReSharper disable once UnusedType.Global
+    internal static class IsExternalInit
+    {
     }
 }
