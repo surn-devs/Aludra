@@ -6,12 +6,12 @@ namespace Aludra.Game.Entities;
 
 public class Player : RigidBodyObject
 {
-    private const float SlowSpeedUps = 96;
-    private const float NormalSpeedUps = 192;
-    private const float ShootCooldownS = 0.5f;
+    private const float SlowSpeed = 96;
+    private const float NormalSpeed = 192;
+    private const double ShootCooldown = 0.5f;
     private static readonly Vector2 SpawnPoint = new(400, 500);
 
-    private float _shootCooldown;
+    private double _shootCooldown;
 
     public Player()
     {
@@ -20,13 +20,13 @@ public class Player : RigidBodyObject
 
     public override void Update(LevelUpdateContext context)
     {
-        var speedMultiplier = context.InputHandler.SecondActionPressed ? SlowSpeedUps : NormalSpeedUps;
+        var speedMultiplier = context.InputHandler.SecondActionPressed ? SlowSpeed : NormalSpeed;
         Velocity = context.InputHandler.DirectionVector * speedMultiplier;
 
-        _shootCooldown -= (float)context.GameTime.ElapsedGameTime.TotalSeconds;
+        _shootCooldown -= context.GameTime.ElapsedGameTime.TotalSeconds;
         if (context.InputHandler.PrimaryActionPressed && _shootCooldown <= 0)
         {
-            _shootCooldown = ShootCooldownS;
+            _shootCooldown = ShootCooldown;
             context.Spawn(new PlayerBullet(Position));
         }
 

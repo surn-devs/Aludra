@@ -6,5 +6,9 @@ namespace Aludra.Game.Contexts;
 
 public delegate void ObjectActionDelegate(GameObject gameObject);
 
-public readonly record struct LevelUpdateContext(GameTime GameTime, InputHandler InputHandler,
-    ObjectActionDelegate Spawn, ObjectActionDelegate Destroy);
+public readonly record struct LevelUpdateContext(
+    GameTime GameTime,
+    InputHandler InputHandler,
+    ObjectActionDelegate Spawn,
+    ObjectActionDelegate Destroy
+);
