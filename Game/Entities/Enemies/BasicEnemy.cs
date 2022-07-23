@@ -8,11 +8,14 @@ namespace Aludra.Game.Entities.Enemies;
 
 public class BasicEnemy : RigidBodyObject
 {
+    private const double ShootCooldown = 1;
     private static readonly Rectangle SafeArea;
 
     private readonly Vector2 _frequencies;
     private readonly Vector2 _multipliers;
     private readonly Vector2 _offsets;
+
+    private double _shootCooldown = ShootCooldown;
 
     static BasicEnemy()
     {
@@ -55,6 +58,13 @@ public class BasicEnemy : RigidBodyObject
             SafeArea.Center.X + oscillation.X * SafeArea.Width * _multipliers.X,
             SafeArea.Center.Y + oscillation.Y * SafeArea.Height * _multipliers.Y
         );
+
+        _shootCooldown -= context.GameTime.ElapsedGameTime.TotalSeconds;
+        if (_shootCooldown <= 0)
+        {
+            _shootCooldown = ShootCooldown;
+            context.Spawn(new EnemyBullet(Position));
+        }
 
         base.Update(context);
     }
