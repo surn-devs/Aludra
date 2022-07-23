@@ -8,35 +8,52 @@ namespace Aludra.Game.Entities.Enemies;
 
 public class BasicEnemy : RigidBodyObject
 {
-    private readonly float _horizontalFrequency;
-    private readonly float _horizontalMultipliers;
-    private readonly float _horizontalOffset;
-    private readonly float _verticalFrequency;
-    private readonly float _verticalMultipliers;
-    private readonly float _verticalOffset;
+    private static readonly Rectangle SafeArea;
+
+    private readonly Vector2 _frequencies;
+    private readonly Vector2 _multipliers;
+    private readonly Vector2 _offsets;
+
+    static BasicEnemy()
+    {
+        var safeArea = new Rectangle(
+            Point.Zero,
+            new Point(GameEngine.ScreenBounds.Width, GameEngine.ScreenBounds.Height * 2 / 3)
+        );
+        safeArea.Inflate(-32, -32);
+        SafeArea = safeArea;
+    }
 
     public BasicEnemy()
     {
-        _horizontalFrequency = Rand.Between(0.0005f, 0.002f);
-        _verticalFrequency = Rand.Between(0.00005f, 0.0005f);
+        _frequencies = new Vector2(
+            Rand.Between(0.5f, 2),
+            Rand.Between(0.05f, 0.5f)
+        );
 
-        _horizontalMultipliers = Rand.Between(0.25f, 1);
-        _verticalMultipliers = Rand.Between(0.1f, 0.75f);
+        _multipliers = new Vector2(
+            Rand.Between(0.25f, 1),
+            Rand.Between(0.1f, 1)
+        );
 
-        _horizontalOffset = Rand.Between(0, (float)(2 * Math.PI));
-        _verticalOffset = Rand.Between(0, (float)(2 * Math.PI));
+        const float twoPi = (float)(2 * Math.PI);
+        _offsets = new Vector2(
+            Rand.Between(0, twoPi),
+            Rand.Between(0, twoPi)
+        );
     }
 
     public override void Update(LevelUpdateContext context)
     {
-        var timeSec = context.GameTime.TotalGameTime.TotalMilliseconds;
-        var horizontalOscillation = (float)Math.Sin(_horizontalFrequency * timeSec + _horizontalOffset);
-        var verticalOscillation = (float)Math.Sin(_verticalFrequency * timeSec + _verticalOffset);
+        var timeSeconds = context.GameTime.TotalGameTime.TotalSeconds;
+        var oscillation = new Vector2(
+            (float)Math.Sin(_frequencies.X * timeSeconds + _offsets.X) / 2f,
+            (float)Math.Sin(_frequencies.Y * timeSeconds + _offsets.Y) / 2f
+        );
 
         Position = new Vector2(
-            GameEngine.ScreenBounds.Center.X +
-            horizontalOscillation * _horizontalMultipliers * 0.9f * GameEngine.ScreenBounds.Width / 2f,
-            ((1 + verticalOscillation) / 2 * _verticalMultipliers + 0.1f) * GameEngine.ScreenBounds.Height
+            SafeArea.Center.X + oscillation.X * SafeArea.Width * _multipliers.X,
+            SafeArea.Center.Y + oscillation.Y * SafeArea.Height * _multipliers.Y
         );
 
         base.Update(context);

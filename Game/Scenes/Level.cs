@@ -9,7 +9,7 @@ namespace Aludra.Game.Scenes;
 
 public class Level : Scene
 {
-    private const double EnemySpawnCooldown = 10;
+    private const double EnemySpawnCooldown = 5;
     private readonly Queue<GameObject> _destroyQueue = new();
     private readonly List<GameObject> _gameObjects = new() { new Player() };
     private readonly Queue<GameObject> _spawnQueue = new();
