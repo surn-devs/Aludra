@@ -1,11 +1,12 @@
 using Aludra.Game.Contexts;
 using Aludra.Game.Entities.Base;
+using Aludra.Game.Entities.Tags;
 using Aludra.Game.Timers;
 using Microsoft.Xna.Framework;
 
 namespace Aludra.Game.Entities;
 
-public class Player : RigidBodyObject
+public class Player : RigidBodyObject, IDestroyableByEnemy
 {
     private const float SlowSpeed = 96;
     private const float NormalSpeed = 192;
@@ -13,7 +14,11 @@ public class Player : RigidBodyObject
 
     private readonly CooldownTimer _shootCooldown = new(0.5);
 
-    public Player() => Position = SpawnPoint;
+    public Player()
+    {
+        Position = SpawnPoint;
+        Radius = 16;
+    }
 
     public override void Update(LevelUpdateContext context)
     {

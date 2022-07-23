@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Aludra.Game.Contexts;
 using Aludra.Game.Entities;
@@ -34,6 +35,15 @@ public class Level : Scene
 
         var levelContext = new LevelUpdateContext(context.GameTime, context.InputHandler, Spawn, Destroy);
         foreach (var gameObject in _gameObjects) gameObject.Update(levelContext);
+
+        for (var i = 0; i < _gameObjects.Count; i++)
+        for (var j = i + 1; j < _gameObjects.Count; j++)
+            if (_gameObjects[i] is RigidBodyObject first && _gameObjects[j] is RigidBodyObject second &&
+                (first.Position - second.Position).LengthSquared() < Math.Pow(first.Radius + second.Radius, 2))
+            {
+                first.CollideWith(new CollideContext(second, Destroy));
+                second.CollideWith(new CollideContext(first, Destroy));
+            }
     }
 
     public override void Draw(DrawContext context)

@@ -1,13 +1,14 @@
 using System;
 using Aludra.Game.Contexts;
 using Aludra.Game.Entities.Base;
+using Aludra.Game.Entities.Tags;
 using Aludra.Game.Timers;
 using Aludra.Game.Util;
 using Microsoft.Xna.Framework;
 
 namespace Aludra.Game.Entities.Enemies;
 
-public class BasicEnemy : RigidBodyObject
+public class BasicEnemy : RigidBodyObject, IDestroyableByPlayerBullet
 {
     private static readonly Rectangle SafeArea;
 
@@ -28,6 +29,8 @@ public class BasicEnemy : RigidBodyObject
 
     public BasicEnemy()
     {
+        Radius = 24;
+
         _frequencies = new Vector2(
             Rand.Between(0.5f, 2),
             Rand.Between(0.05f, 0.5f)
@@ -61,6 +64,14 @@ public class BasicEnemy : RigidBodyObject
         if (_shootTimer.UpdateAndAct(context)) context.Spawn(new EnemyBullet(Position));
 
         base.Update(context);
+    }
+
+    public override void CollideWith(CollideContext context)
+    {
+        if (context.Other is not IDestroyableByEnemy) return;
+
+        context.Destroy(this);
+        context.Destroy(context.Other);
     }
 
     public override void Draw(DrawContext context) => context.DrawCentered("BasicEnemy", Position);

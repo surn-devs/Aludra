@@ -5,8 +5,9 @@ namespace Aludra.Game.Entities.Base;
 
 public abstract class RigidBodyObject : GameObject
 {
-    protected Vector2 Position { get; set; }
+    public Vector2 Position { get; protected set; }
     protected Vector2 Velocity { get; set; }
+    public float Radius { get; protected set; }
 
     public override void Update(LevelUpdateContext context)
     {
@@ -18,5 +19,9 @@ public abstract class RigidBodyObject : GameObject
         if (!bounds.Contains(Position)) context.Destroy(this);
 
         base.Update(context);
+    }
+
+    public virtual void CollideWith(CollideContext context)
+    {
     }
 }
