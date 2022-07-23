@@ -14,8 +14,5 @@ public class EnemyBullet : RigidBodyObject
         Velocity = Vector2.UnitY * Speed;
     }
 
-    public override void Draw(DrawContext context)
-    {
-        context.DrawCentered("EnemyBullet", Position);
-    }
+    public override void Draw(DrawContext context) => context.DrawCentered("EnemyBullet", Position);
 }

@@ -14,8 +14,5 @@ public class PlayerBullet : RigidBodyObject
         Velocity = -Vector2.UnitY * Speed;
     }
 
-    public override void Draw(DrawContext context)
-    {
-        context.DrawCentered("PlayerBullet", Position);
-    }
+    public override void Draw(DrawContext context) => context.DrawCentered("PlayerBullet", Position);
 }

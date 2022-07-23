@@ -10,4 +10,4 @@ public record LevelUpdateContext(
     InputHandler InputHandler,
     Action<GameObject> Spawn,
     Action<GameObject> Destroy
-);
+) : UpdateContext(GameTime, InputHandler);

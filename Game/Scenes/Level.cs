@@ -3,17 +3,17 @@ using Aludra.Game.Contexts;
 using Aludra.Game.Entities;
 using Aludra.Game.Entities.Base;
 using Aludra.Game.Entities.Enemies;
+using Aludra.Game.Timers;
 using Microsoft.Xna.Framework;
 
 namespace Aludra.Game.Scenes;
 
 public class Level : Scene
 {
-    private const double EnemySpawnCooldown = 5;
     private readonly Queue<GameObject> _destroyQueue = new();
+    private readonly ThrottleTimer _enemySpawnTimer = new(5);
     private readonly List<GameObject> _gameObjects = new() { new Player() };
     private readonly Queue<GameObject> _spawnQueue = new();
-    private double _enemySpawnCooldown;
 
     private void Spawn(GameObject gameObject)
     {
@@ -27,12 +27,7 @@ public class Level : Scene
 
     public override void Update(UpdateContext context)
     {
-        _enemySpawnCooldown -= context.GameTime.ElapsedGameTime.TotalSeconds;
-        if (_enemySpawnCooldown <= 0)
-        {
-            _enemySpawnCooldown = EnemySpawnCooldown;
-            Spawn(new BasicEnemy());
-        }
+        if (_enemySpawnTimer.UpdateAndAct(context)) Spawn(new BasicEnemy());
 
         while (_destroyQueue.Count > 0) _gameObjects.Remove(_destroyQueue.Dequeue());
         while (_spawnQueue.Count > 0) _gameObjects.Add(_spawnQueue.Dequeue());

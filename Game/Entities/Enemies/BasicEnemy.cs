@@ -1,6 +1,7 @@
 using System;
 using Aludra.Game.Contexts;
 using Aludra.Game.Entities.Base;
+using Aludra.Game.Timers;
 using Aludra.Game.Util;
 using Microsoft.Xna.Framework;
 
@@ -8,14 +9,12 @@ namespace Aludra.Game.Entities.Enemies;
 
 public class BasicEnemy : RigidBodyObject
 {
-    private const double ShootCooldown = 1;
     private static readonly Rectangle SafeArea;
 
     private readonly Vector2 _frequencies;
     private readonly Vector2 _multipliers;
     private readonly Vector2 _offsets;
-
-    private double _shootCooldown = ShootCooldown;
+    private readonly ThrottleTimer _shootTimer = new(1, false);
 
     static BasicEnemy()
     {
@@ -59,18 +58,10 @@ public class BasicEnemy : RigidBodyObject
             SafeArea.Center.Y + oscillation.Y * SafeArea.Height * _multipliers.Y
         );
 
-        _shootCooldown -= context.GameTime.ElapsedGameTime.TotalSeconds;
-        if (_shootCooldown <= 0)
-        {
-            _shootCooldown = ShootCooldown;
-            context.Spawn(new EnemyBullet(Position));
-        }
+        if (_shootTimer.UpdateAndAct(context)) context.Spawn(new EnemyBullet(Position));
 
         base.Update(context);
     }
 
-    public override void Draw(DrawContext context)
-    {
-        context.DrawCentered("BasicEnemy", Position);
-    }
+    public override void Draw(DrawContext context) => context.DrawCentered("BasicEnemy", Position);
 }
