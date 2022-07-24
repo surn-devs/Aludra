@@ -1,11 +1,10 @@
 using Aludra.Game.Contexts;
-using Aludra.Game.Entities.Base;
-using Aludra.Game.Entities.Tags;
+using Aludra.Game.Entities.Player;
 using Microsoft.Xna.Framework;
 
 namespace Aludra.Game.Entities.Enemies;
 
-public class EnemyBullet : RigidBodyObject
+public class EnemyBullet : GameObject, IDamagesPlayer
 {
     private const float Speed = 256;
 
@@ -14,14 +13,6 @@ public class EnemyBullet : RigidBodyObject
         Position = pos;
         Velocity = Vector2.UnitY * Speed;
         Radius = 8;
-    }
-
-    public override void CollideWith(CollideContext context)
-    {
-        if (context.Other is not IDestroyableByEnemy) return;
-
-        context.Destroy(this);
-        context.Destroy(context.Other);
     }
 
     public override void Draw(DrawContext context) => context.DrawCentered("EnemyBullet", Position);

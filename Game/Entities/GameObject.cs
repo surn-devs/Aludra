@@ -1,15 +1,15 @@
 using Aludra.Game.Contexts;
 using Microsoft.Xna.Framework;
 
-namespace Aludra.Game.Entities.Base;
+namespace Aludra.Game.Entities;
 
-public abstract class RigidBodyObject : GameObject
+public abstract class GameObject
 {
     public Vector2 Position { get; protected set; }
     protected Vector2 Velocity { get; set; }
-    public float Radius { get; protected set; }
+    public float Radius { get; protected init; }
 
-    public override void Update(LevelUpdateContext context)
+    public virtual void Update(LevelUpdateContext context)
     {
         var dt = (float)context.GameTime.ElapsedGameTime.TotalSeconds;
         var bounds = GameEngine.ScreenBounds;
@@ -17,8 +17,10 @@ public abstract class RigidBodyObject : GameObject
         Position += Velocity * dt;
 
         if (!bounds.Contains(Position)) context.Destroy(this);
+    }
 
-        base.Update(context);
+    public virtual void Draw(DrawContext context)
+    {
     }
 
     public virtual void CollideWith(CollideContext context)

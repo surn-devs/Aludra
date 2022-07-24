@@ -1,12 +1,10 @@
 using Aludra.Game.Contexts;
-using Aludra.Game.Entities.Base;
-using Aludra.Game.Entities.Tags;
 using Aludra.Game.Timers;
 using Microsoft.Xna.Framework;
 
-namespace Aludra.Game.Entities;
+namespace Aludra.Game.Entities.Player;
 
-public class Player : RigidBodyObject, IDestroyableByEnemy
+public class PlayerEntity : GameObject
 {
     private const float SlowSpeed = 96;
     private const float NormalSpeed = 192;
@@ -14,7 +12,7 @@ public class Player : RigidBodyObject, IDestroyableByEnemy
 
     private readonly CooldownTimer _shootCooldown = new(0.5);
 
-    public Player()
+    public PlayerEntity()
     {
         Position = SpawnPoint;
         Radius = 16;
@@ -30,6 +28,14 @@ public class Player : RigidBodyObject, IDestroyableByEnemy
             context.Spawn(new PlayerBullet(Position));
 
         base.Update(context);
+    }
+
+    public override void CollideWith(CollideContext context)
+    {
+        if (context.Other is not IDamagesPlayer) return;
+
+        context.Destroy(this);
+        context.Destroy(context.Other);
     }
 
     public override void Draw(DrawContext context) => context.DrawCentered("Player", Position);

@@ -1,9 +1,9 @@
 using System;
-using Aludra.Game.Entities.Base;
+using Aludra.Game.Entities;
 
 namespace Aludra.Game.Contexts;
 
 public record CollideContext(
-    RigidBodyObject Other,
+    GameObject Other,
     Action<GameObject> Destroy
 );

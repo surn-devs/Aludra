@@ -1,5 +1,5 @@
 using System;
-using Aludra.Game.Entities.Base;
+using Aludra.Game.Entities;
 using Aludra.Game.Services;
 using Microsoft.Xna.Framework;
 

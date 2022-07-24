@@ -1,14 +1,13 @@
 using System;
 using Aludra.Game.Contexts;
-using Aludra.Game.Entities.Base;
-using Aludra.Game.Entities.Tags;
+using Aludra.Game.Entities.Player;
 using Aludra.Game.Timers;
 using Aludra.Game.Util;
 using Microsoft.Xna.Framework;
 
 namespace Aludra.Game.Entities.Enemies;
 
-public class BasicEnemy : RigidBodyObject, IDestroyableByPlayerBullet
+public class BasicEnemy : GameObject, IDamageableByPlayer, IDamagesPlayer
 {
     private static readonly Rectangle SafeArea;
 
@@ -64,14 +63,6 @@ public class BasicEnemy : RigidBodyObject, IDestroyableByPlayerBullet
         if (_shootTimer.UpdateAndAct(context)) context.Spawn(new EnemyBullet(Position));
 
         base.Update(context);
-    }
-
-    public override void CollideWith(CollideContext context)
-    {
-        if (context.Other is not IDestroyableByEnemy) return;
-
-        context.Destroy(this);
-        context.Destroy(context.Other);
     }
 
     public override void Draw(DrawContext context) => context.DrawCentered("BasicEnemy", Position);

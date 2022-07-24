@@ -1,11 +1,9 @@
 using Aludra.Game.Contexts;
-using Aludra.Game.Entities.Base;
-using Aludra.Game.Entities.Tags;
 using Microsoft.Xna.Framework;
 
-namespace Aludra.Game.Entities;
+namespace Aludra.Game.Entities.Player;
 
-public class PlayerBullet : RigidBodyObject
+public class PlayerBullet : GameObject
 {
     private const float Speed = 512;
 
@@ -18,7 +16,7 @@ public class PlayerBullet : RigidBodyObject
 
     public override void CollideWith(CollideContext context)
     {
-        if (context.Other is not IDestroyableByPlayerBullet) return;
+        if (context.Other is not IDamageableByPlayer) return;
 
         context.Destroy(this);
         context.Destroy(context.Other);
